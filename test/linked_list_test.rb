@@ -58,4 +58,24 @@ class LinkedListTest < Minitest::Test
     @list.insert(0, "poop")
     assert_equal "poop plop woo ding doop", @list.to_string
   end
+
+  def test_it_can_find_a_nodes_by_position
+    @list.append("plop")
+    @list.append("ding")
+    @list.append("woo")
+    @list.append("poo")
+    assert_equal "woo", @list.find(2, 1)
+    assert_equal "woo poo", @list.find(2, 2)
+  end
 end
+
+# > list.includes?("deep")
+# => true
+# > list.includes?("dep")
+# => false
+# > list.pop
+# => "blop"
+# > list.pop
+# => "shu"
+# > list.to_string
+# => "deep woo shi"

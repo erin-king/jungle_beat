@@ -6,7 +6,6 @@ class LinkedList
 
   def initialize
     @head = nil
-    # @head = Node.new(value, nil)
   end
 
   def append(data)
@@ -68,6 +67,41 @@ class LinkedList
   end
 
   def to_string
+    current_node = @head
+    data_array = []
+    if current_node
+      data_array << current_node.data
+      until current_node.next_node == nil
+        current_node = current_node.next_node
+        data_array << current_node.data
+      end
+    end
+    data_array.join(" ")
+  end
+
+  def find(position, size)
+    count = 0
+    if @head == nil
+      return nil
+    else
+      if position == count
+        self.to_string
+        # @head = Node.new(data, @head)
+      end
+      count += 1
+      current_node = @head
+      if position == count
+        current_node.next_node = Node.new(data, current_node.next_node)
+      end
+      while current_node.next_node != nil
+        count += 1
+        current_node = current_node.next_node
+        if position == count
+          current_node.next_node = Node.new(data, current_node.next_node)
+        end
+      end
+    end
+
     current_node = @head
     data_array = []
     if current_node
