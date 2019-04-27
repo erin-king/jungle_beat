@@ -59,23 +59,56 @@ class LinkedListTest < Minitest::Test
     assert_equal "poop plop woo ding doop", @list.to_string
   end
 
-  def test_it_can_find_a_nodes_by_position
+  def test_it_can_find_and_return_node_subsets_data_as_string
+    # assert_equal "", @list.find(0, 1)
+    @list.append("plop")
+    # assert_equal "plop", @list.find(0, 1)
+    @list.append("ding")
+    # assert_equal "plop ding", @list.find(0, 2)
+    # assert_equal "plop", @list.find(0, 1)
+    @list.append("woo")
+    @list.append("poo")
+    # assert_equal "woo", @list.find(2, 1)
+    assert_equal "woo poo", @list.find(2, 2)
+  end
+
+  def test_it_can_find_start_node
+    assert_equal nil, @list.find_sublist_start(2, @list.head)
+    @list.append("plop")
+    assert_equal "plop", @list.find_sublist_start(0, @list.head).data
+    @list.append("ding")
+    assert_equal "plop", @list.find_sublist_start(0, @list.head).data
+    assert_equal "ding", @list.find_sublist_start(1, @list.head).data
+    @list.append("woo")
+    @list.append("poo")
+    @list.append("dong")
+    assert_equal "woo", @list.find_sublist_start(2, @list.head).data
+    assert_equal "dong", @list.find_sublist_start(4, @list.head).data
+  end
+
+  def test_it_can_find_end_node
     @list.append("plop")
     @list.append("ding")
     @list.append("woo")
     @list.append("poo")
-    assert_equal "woo", @list.find(2, 1)
-    assert_equal "woo poo", @list.find(2, 2)
+    @list.append("dong")
+    assert_equal "plop ding", @list.to_string(@list.find_sublist_end(2, @list.head))
+  end
+
+  def test_it_can_find_included_data
+    @list.append("ding")
+    @list.append("woo")
+    assert @list.includes?("ding")
+    assert @list.includes?("woo")
+    refute @list.includes?("dong")
+  end
+
+  def test_it_can_remove_the_last_node
+    @list.append("ding")
+    @list.append("woo")
+    @list.append("dong")
+    assert_equal "ding woo dong", @list.to_string
+    @list.pop
+    assert_equal "ding woo", @list.to_string
   end
 end
-
-# > list.includes?("deep")
-# => true
-# > list.includes?("dep")
-# => false
-# > list.pop
-# => "blop"
-# > list.pop
-# => "shu"
-# > list.to_string
-# => "deep woo shi"
